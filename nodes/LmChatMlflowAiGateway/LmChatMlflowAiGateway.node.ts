@@ -1,10 +1,4 @@
-import { ChatOpenAI, type ClientOptions } from '@langchain/openai';
-import {
-	getProxyAgent,
-	makeN8nLlmFailedAttemptHandler,
-	N8nLlmTracing,
-	getConnectionHintNoticeField,
-} from '@n8n/ai-utilities';
+import { getConnectionHintNoticeField, supplyModel } from '@n8n/ai-utilities';
 import {
 	NodeConnectionTypes,
 	type INodeType,
@@ -175,43 +169,29 @@ export class LmChatMlflowAiGateway implements INodeType {
 			responseFormat?: 'text' | 'json_object';
 		};
 
-		const timeout = options.timeout;
-        const username = credentials.username as string;
-        const password = credentials.password as string;
-		const url = `${credentials.baseUrl as string}/gateway/mlflow/v1`
-        const basicAuth = Buffer.from(`${username}:${password}`).toString('base64');
+		const username = credentials.username as string;
+		const password = credentials.password as string;
+		const url = `${credentials.baseUrl as string}/gateway/mlflow/v1`;
+		const basicAuth = Buffer.from(`${username}:${password}`).toString('base64');
 
-        const configuration: ClientOptions = {
-            baseURL: url,
-            defaultHeaders: {
-                Authorization: `Basic ${basicAuth}`,
-            },
-            fetchOptions: {
-                dispatcher: getProxyAgent(url as string, {
-                    headersTimeout: timeout,
-                    bodyTimeout: timeout,
-                }),
-            },
-        };
-
-		const model = new ChatOpenAI({
-			apiKey: "not-needed",
+		return supplyModel(this, {
+			type: 'openai',
+			baseUrl: url,
 			model: credentials.endpoint as string,
-			...options,
-			timeout,
+			apiKey: 'not-needed',
+			defaultHeaders: {
+				Authorization: `Basic ${basicAuth}`,
+			},
+			temperature: options.temperature,
+			topP: options.topP,
+			frequencyPenalty: options.frequencyPenalty,
+			presencePenalty: options.presencePenalty,
+			maxTokens: options.maxTokens,
+			timeout: options.timeout,
 			maxRetries: options.maxRetries ?? 2,
-			configuration,
-			callbacks: [new N8nLlmTracing(this)],
-			modelKwargs: options.responseFormat
-				? {
-						response_format: { type: options.responseFormat },
-					}
+			additionalParams: options.responseFormat
+				? { response_format: { type: options.responseFormat } }
 				: undefined,
-			onFailedAttempt: makeN8nLlmFailedAttemptHandler(this),
 		});
-
-		return {
-			response: model,
-		};
 	}
 }
