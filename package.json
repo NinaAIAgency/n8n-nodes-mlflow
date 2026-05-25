@@ -1,9 +1,9 @@
 {
-	"name": "n8n-nodes-mlflow",
+	"name": "n8n-nodes-mlflow-ai-gateway",
 	"version": "0.1.0",
-	"description": "MLFlow Ai Gateway",
+	"description": "n8n community node for MLflow AI Gateway",
 	"license": "MIT",
-	"homepage": "",
+	"homepage": "https://github.com/NinaAIAgency/n8n-nodes-mlflow",
 	"keywords": [
 		"n8n-community-node-package"
 	],
@@ -39,14 +39,14 @@
 		]
 	},
 	"devDependencies": {
-		"@n8n/node-cli": "*",
+		"@n8n/node-cli": "^0.31.0",
 		"eslint": "9.32.0",
 		"prettier": "3.6.2",
 		"release-it": "^19.0.4",
 		"typescript": "5.9.2"
 	},
 	"peerDependencies": {
-		"n8n-workflow": "*",
-		"@n8n/ai-node-sdk": "*"
+		"@n8n/ai-node-sdk": "*",
+		"n8n-workflow": "*"
 	}
 }
