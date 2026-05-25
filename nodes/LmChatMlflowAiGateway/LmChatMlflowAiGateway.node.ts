@@ -15,6 +15,7 @@ export class LmChatMlflowAiGateway implements INodeType {
 		group: ['transform'],
 		version: [1],
 		description: 'Access to language models via MLFlow AI Gateway',
+		subtitle: '={{ $credentials?.endpoint }}',
 		defaults: {
 			name: 'MLFlow AI Gateway',
 		},
