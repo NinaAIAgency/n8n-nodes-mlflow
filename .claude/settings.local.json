@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx n8n-node *)",
+      "Bash(xargs -I {} grep -H '\"version\"' {})",
+      "WebFetch(domain:www.npmjs.com)"
+    ]
+  }
+}
