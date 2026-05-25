@@ -1,4 +1,4 @@
-import { getConnectionHintNoticeField, supplyModel } from '@n8n/ai-utilities';
+import { supplyModel } from '@n8n/ai-node-sdk';
 import {
 	NodeConnectionTypes,
 	type INodeType,
@@ -48,7 +48,6 @@ export class LmChatMlflowAiGateway implements INodeType {
 			baseURL: '={{ $credentials?.baseUrl }}',
 		},
 		properties: [
-			getConnectionHintNoticeField([NodeConnectionTypes.AiChain, NodeConnectionTypes.AiAgent]),
 			{
 				displayName:
 					'If using JSON response format, you must include word "json" in the prompt in your chain or agent. Also, make sure to select latest models released post November 2023.',

@@ -17,14 +17,14 @@ export class mlflowAiGatewayApi implements ICredentialType {
 
 	properties: INodeProperties[] = [
 		{
-			displayName: 'Tracking URL',
+			displayName: 'MLflow Tracking URL',
 			name: 'baseUrl',
 			required: true,
 			type: 'string',
 			default: 'http://localhost:5000',
 		},
 		{
-			displayName: 'Endpoint',
+			displayName: 'MLflow Endpoint',
 			name: 'endpoint',
 			required: true,
 			type: 'string',
